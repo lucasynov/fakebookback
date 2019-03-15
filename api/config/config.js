@@ -1,2 +1,3 @@
-module.exports =  {'mdp' : 'OXW1cIoXEvKfwLeD'};
-
+module.exports = {
+    "secret" : "P@ssw0rd"
+};
