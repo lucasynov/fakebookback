@@ -21,6 +21,10 @@ var userSchema = new Schema({
         required: 'displayname is empty'
     },
   },
+  token24 : {
+    type :String,
+    required : true,
+  },
   email: {
     type: String, 
     lowercase: true, 

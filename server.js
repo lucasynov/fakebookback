@@ -5,8 +5,10 @@ mongoose = require('mongoose'),
 Task = require('./api/models/todoListModel'), //created model loading here
 User = require('./api/models/userModel'), //created model loading here
 bodyParser = require('body-parser');
-
+const cors = require('cors');
 mdp = require('./api/config/configDb');
+app.set("trust proxy", true);
+app.use(cors());
 
 
 // mongoose instance connection url connection

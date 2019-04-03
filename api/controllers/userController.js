@@ -1,5 +1,6 @@
 const User = require('../models/userModel.js');
 const passwordHash = require("password-hash");
+let jwt = require('jsonwebtoken');
 
 function signup(req, res) {
     if (!req.body.email || !req.body.password) {
@@ -17,6 +18,7 @@ function signup(req, res) {
                     displayname: req.body.name.firstname + ' ' + req.body.name.lastname,
             },
             photo : req.body.name.photo,
+            token24 : "",
         }
         var findUser = new Promise(function (resolve, reject) {
             User.findOne({
@@ -35,7 +37,11 @@ function signup(req, res) {
         })
 
         findUser.then(function () {
+            let token = jwt.sign({ id: user._id }, 'secret', {
+                expiresIn: 86400 
+            });
             var _u = new User(user);
+            _u.token24  = token;
             _u.save(function (err, user) {
                 if (err) {
                     res.status(500).json({
@@ -44,7 +50,9 @@ function signup(req, res) {
                 } else {
                     res.status(200).json({
                         "text": "Succès",
-                        "token": user.getToken()
+                        "token": user.getToken(),
+                        "user" : user,
+                        "token24" : user.token24
                     })
                 }
             })
@@ -89,9 +97,25 @@ function login(req, res) {
                 })
             } else {
                 if (user.authenticate(req.body.password)) {
-                    res.status(200).json({
-                        "token": user.getToken(),
-                        "text": "Authentification réussi"
+                    let token = jwt.sign({ id: user._id }, 'secret', {
+                        expiresIn: 86400 
+                    });
+
+                    user.token24 = token;
+
+                    user.save(function (err, user) {
+                        if (err) {
+                            res.status(500).json({
+                                "text": "Erreur interne" + err,
+                            })
+                        } else {
+                            res.status(200).json({
+                                "token": user.getToken(),
+                                "text": "Authentification réussi",
+                                "token24" : token,
+                                user : user,
+                            })
+                        }
                     })
                 } else {
                     res.status(401).json({
@@ -103,7 +127,30 @@ function login(req, res) {
     }
 }
 
-//On exporte nos deux fonctions
 
+function findUser(req, res) {
+    User.findOne({
+        token24: req.body.token24
+    }, function (err, user) {
+        if (err) {
+            res.status(500).json({
+                "text": "Erreur interne"
+            })
+        } else if (!user) {
+            res.status(401).json({
+                "text": "Le token est invalide"
+            })
+        } else {
+            res.status(200).json({
+                "token": user.getToken(),
+                "token24" : user.token24,
+                "user" : user,
+            })
+        }
+    })
+}
+
+//On exporte nos deux fonctions
+exports.findUser = findUser;
 exports.login = login;
 exports.signup = signup;
