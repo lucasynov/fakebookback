@@ -11,6 +11,13 @@ app.set("trust proxy", true);
 app.use(cors());
 
 
+let urlencodedParser = bodyParser.urlencoded({
+  extended: true,
+  limit:"10mb"
+});
+app.use(urlencodedParser);
+app.use(bodyParser.json({ limit: '10mb' }));
+
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 
@@ -32,8 +39,8 @@ mongoose.connect(dbURI, options).then(
 );
 
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
 
 
 var routes = require('./api/routes/appRoutes'); //importing route

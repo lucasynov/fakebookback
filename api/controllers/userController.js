@@ -7,7 +7,7 @@ function signup(req, res) {
         //Le cas où l'email ou bien le password ne serait pas soumit ou nul
         res.status(400).json({
             "text": "Requête invalide"
-        })
+        });
     } else {
         var user = {
             email: req.body.email,
@@ -17,7 +17,7 @@ function signup(req, res) {
                     lastname: req.body.name.lastname,
                     displayname: req.body.name.firstname + ' ' + req.body.name.lastname,
             },
-            photo : req.body.name.photo,
+            photo : req.body.photo,
             token24 : "",
         }
         var findUser = new Promise(function (resolve, reject) {
