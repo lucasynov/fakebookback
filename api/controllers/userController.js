@@ -150,7 +150,29 @@ function findUser(req, res) {
     })
 }
 
-//On exporte nos deux fonctions
+function findAll(req, res){
+    User.find({}).exec( function (err, users) {
+        if (err) {
+            res.status(500).json({
+                "text": err
+            })
+        } else if (!users) {
+            res.status(401).json({
+                "text": "Une erreur est survenue."
+            })
+        } else {
+            res.status(200).json({
+                "users": users
+            })
+        }
+    })
+}
+
+
+
+
+
 exports.findUser = findUser;
 exports.login = login;
 exports.signup = signup;
+exports.findAll = findAll;

@@ -33,4 +33,7 @@ module.exports = function(app) {
   app.route('/posts/:postId')
     .delete(postController.delete_a_post)
     .get(postController.get_one_post);
+
+  app.route('/users')
+    .get(userController.findAll);
 };

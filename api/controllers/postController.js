@@ -4,7 +4,7 @@ const Users = require('../models/userModel.js');
 
 
 function findPost(req, res) {
-    Post.find({}).populate('author', 'name').exec( function (err, post) {
+    Post.find({}).sort({'created_at': 'desc'}).populate('author', 'name').exec( function (err, post) {
         if (err) {
             res.status(500).json({
                 "text": err
@@ -22,7 +22,7 @@ function findPost(req, res) {
 }
 
 function createPost(req, res) {
-    var new_post = new Post(req.body);
+    var new_post = new Post(req.body.data);
     new_post.save(function(err, post) {
       if (err){
         res.send(err);
