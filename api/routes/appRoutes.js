@@ -5,6 +5,7 @@ module.exports = function(app) {
   let userController = require('../controllers/userController');
   let todoList = require('../controllers/todoListController');
   let postController = require('../controllers/postController');
+  let conversationController = require('../controllers/conversationController');
 
   // todoList Users
   app.route('/user')
@@ -36,4 +37,11 @@ module.exports = function(app) {
 
   app.route('/users')
     .get(userController.findAll);
+
+  app.route('/chat/conversation/all')
+    .post(conversationController.getUserConvs);
+
+  app.route('/chat/message/add')
+    .post(conversationController.addMessage);
+   
 };

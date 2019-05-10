@@ -42,7 +42,8 @@ var userSchema = new Schema({
   created_date: {
     type: Date,
     default: Date.now
-  }
+  },
+  sockets:Array,
 });
 
 userSchema.methods = {
