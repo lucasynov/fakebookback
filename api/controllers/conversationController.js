@@ -46,7 +46,6 @@ function addMessage(req, res) {
             text: "Requête invalide"
         });
     } else {
-        // console.log(req.body.convId,req.body.message, req.body.author);
         Conversation.findOneAndUpdate(
                 {_id: req.body.convId}, 
                 {$push: 
@@ -63,7 +62,6 @@ function addMessage(req, res) {
             if (err){
                 res.send(err);
             }else{
-                console.log(conv);
                 res.json(conv);
             }
         });

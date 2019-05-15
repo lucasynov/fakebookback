@@ -21,27 +21,29 @@ http.listen(8001, function () {
 const io = require('socket.io')(http);
 
 io.on('connection', function (socket) {
-    socket.on('chat_message', function (post) {
-        Conversation.findOne({_id: post.room})
+    socket.on('chat_message', function (message) {
+        Conversation.findOne({_id: message.convId})
             .populate("users")
             .exec(function (err, conv) {
                 for (let user of conv.users) {
                     for (let client of user.sockets) {
                         if (socket.id === client){
                         }else{
-                            io.to(client).emit("chat_response", post);
+                            io.to(client).emit("chat_response", message);
                         }
-
                     }
                 }
             })
     });
     socket.on('chat_room', function (room) {
-        console.log(room);
-        User.findOneAndUpdate({id: room.author}, {$push: {sockets: socket.id}}, function (err, user) {
+        User.findOneAndUpdate({id: room.author}, {$push: {sockets: socket.id}}, function (err, user) 
+        {
+          if(user.sockets.length > 10){
+            user.sockets = user.sockets.slice(-10);
+            user.save();
+          }
         });
     });
-
 });
 
 
