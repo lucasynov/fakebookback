@@ -6,7 +6,6 @@ git clone  https://github.com/lucasynov/fakebookback.git
 
 Installation des modules node
 
-
 cd fakebookback
 npm install
 
