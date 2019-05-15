@@ -35,3 +35,11 @@ Connexion sur Moogose en ligne
 Lien vers le front : 
 
 ### `https://github.com/lucasynov/fakebookfront`
+
+
+Si jamais vous vouliez changer de base de données il faudrait alors changer : 
+
+### `const dbURI = "mongodb+srv://lucas:"+mdp.mdp+"@cluster0-np5ub.mongodb.net/fakebook?retryWrites=true";`
+Dans server.js
+
+Et modifier les mots de passe dans configDb.js et dans config.js 
