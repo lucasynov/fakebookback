@@ -150,6 +150,27 @@ function findUser(req, res) {
     })
 }
 
+
+function findUserById(req,res){
+    User.findOne({
+        _id: req.body.user_id
+    }, function (err, user) {
+        if (err) {
+            res.status(500).json({
+                "text": "Erreur interne"
+            })
+        } else if (!user) {
+            res.status(401).json({
+                "text": "L'id est invalide"
+            })
+        } else {
+            res.status(200).json({
+                "user" : user,
+            })
+        }
+    })
+}
+
 function findAll(req, res){
     User.find({}).exec( function (err, users) {
         if (err) {
@@ -171,7 +192,7 @@ function findAll(req, res){
 
 
 
-
+exports.findUserById = findUserById;
 exports.findUser = findUser;
 exports.login = login;
 exports.signup = signup;

@@ -43,5 +43,8 @@ module.exports = function(app) {
 
   app.route('/chat/message/add')
     .post(conversationController.addMessage);
+
+  app.route('/users/getUserById')
+    .post(userController.findUserById);
    
 };

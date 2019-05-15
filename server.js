@@ -22,18 +22,7 @@ const io = require('socket.io')(http);
 
 io.on('connection', function (socket) {
     socket.on('chat_message', function (message) {
-        Conversation.findOne({_id: message.convId})
-            .populate("users")
-            .exec(function (err, conv) {
-                for (let user of conv.users) {
-                    for (let client of user.sockets) {
-                        if (socket.id === client){
-                        }else{
-                            io.to(client).emit("chat_response", message);
-                        }
-                    }
-                }
-            })
+        io.emit("chat_response", message);
     });
     socket.on('chat_room', function (room) {
         User.findOneAndUpdate({id: room.author}, {$push: {sockets: socket.id}}, function (err, user) 
