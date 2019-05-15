@@ -6,16 +6,21 @@ Avoir une connexion internet et un git bash avec un ordinateur fonctionnel.
 
 Clone du projet :
 
-git clone  https://github.com/lucasynov/fakebookback.git
+### `git clone  https://github.com/lucasynov/fakebookback.git`
+
+
+Se déplacer dedans : 
+
+### `cd fakebookback`
+
 
 Installation des modules node : 
 
-cd fakebookback
-npm install
+### `npm install`
 
 Lancement du serveur :
 
-node server
+### `node server`
 
 
 Ports utilisés : 
@@ -25,3 +30,8 @@ Ports utilisés :
 
 
 Connexion sur Moogose en ligne 
+
+
+Lien vers le front : 
+
+### `https://github.com/lucasynov/fakebookfront`
